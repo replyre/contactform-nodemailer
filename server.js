@@ -23,9 +23,9 @@ app.post("/", (req, res) => {
   });
 
   const mailOptions = {
-    from: req.body.email,
+    from: req.body.email, //will be overwritten by google
     to: process.env.EMAIL_USER,
-    subject: `Message from ${req.body.name} :${req.body.subject}`,
+    subject: `Message from ${req.body.email} :${req.body.subject}`,
     text: `${req.body.message}`,
   };
 
