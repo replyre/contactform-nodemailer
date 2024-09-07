@@ -1,14 +1,14 @@
-console.log("hello");
-
 const form = document.querySelector(".contact-form");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  const name = document.getElementById("name").value;
-  const subject = document.getElementById("subject").value;
-  const email = document.getElementById("email").value;
-  const message = document.getElementById("message").value;
-  const formdata = { name, email, subject, message };
+  document.querySelector(".loader").style.display = "flex";
+
+  let name = document.getElementById("name").value;
+  let subject = document.getElementById("subject").value;
+  let email = document.getElementById("email").value;
+  let message = document.getElementById("message").value;
+  let formdata = { name, email, subject, message };
 
   const xhr = new XMLHttpRequest();
   xhr.open("POST", "/");
@@ -18,10 +18,14 @@ form.addEventListener("submit", (e) => {
 
     if (xhr.responseText == "success") {
       alert("Email sent!");
-      name = email = subject = message = "";
+      Object.keys(formdata).forEach((e) => {
+        document.getElementById(e).value = "";
+      });
     } else {
       alert("something went wrong");
     }
+
+    document.querySelector(".loader").style.display = "none";
   };
 
   xhr.send(JSON.stringify(formdata));
